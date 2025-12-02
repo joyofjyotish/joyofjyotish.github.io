@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joy of Jyotish</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; transition:all 1.8s ease; }
+    body {
+      font-family: Georgia, serif;
+      text-align: center;
+      background: #8B0000;
+      color: #FFD700;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .logo {
+      padding: 2.5vh 2vw;
+      font-size: 5.5vw;
+      font-style: italic;
+      font-weight: bold;
+      background: rgba(0,0,0,0.18);
+    }
+
+    .main {
+      flex: 1;
+      padding: 4vh 5vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 3vh;
+    }
+
+    .title {
+      font-size: 9vw;
+      font-style: italic;
+      margin: 0;
+      text-shadow: 0 0 20px rgba(255,215,0,0.6);
+    }
+    .subtitle {
+      font-size: 4.2vw;
+      opacity: 0.95;
+    }
+
+    .warning {
+      width: 90vw;
+      max-width: 800px;
+      margin: 4vh auto;
+      padding: 4vw;
+      border: 5px double;
+      border-radius: 16px;
+      font-size: 3.8vw;
+      background: rgba(0,0,0,0.25);
+      line-height: 1.9;
+    }
+    .warning strong {
+      font-size: 5vw;
+      display: block;
+      margin-bottom: 2vh;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 3.5vw 9vw;
+      margin: 3vh 0;
+      font-size: 4.5vw;
+      border: 5px solid;
+      border-radius: 50px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .join-section {
+      padding: 7vh 4vw;
+    }
+    .join-title {
+      font-size: 7.5vw;
+      margin-bottom: 4vh;
+    }
+
+    footer {
+      padding: 3vh;
+      font-size: 3.5vw;
+      background: rgba(0,0,0,0.2);
+    }
+
+    /* Caps maximum size so it never gets "too big" on large phones/laptops */
+    @media (min-width: 600px) {
+      .logo        { font-size: 32px; padding: 16px; }
+      .title       { font-size: 54px; }
+      .subtitle    { font-size: 24px; }
+      .warning     { font-size: 18px; padding: 24px; }
+      .warning strong { font-size: 26px; }
+      .btn         { font-size: 24px; padding: 14px 40px; }
+      .join-title  { font-size: 44px; }
+      footer       { font-size: 18px; }
+    }
+
+    /* Tiny old phones – still perfectly readable */
+    @media (max-width: 360px) {
+      .title       { font-size: 36px; }
+      .subtitle    { font-size: 18px; }
+      .warning     { font-size: 15px; padding: 16px; }
+      .warning strong { font-size: 19px; }
+      .btn         { font-size: 18px; padding: 12px 24px; }
+      .logo        { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo" id="logo">Joy of Jyotish</div>
+
+  <div class="main">
+    <h1 class="title" id="main-title">Joy of Jyotish</h1>
+    <div class="subtitle" id="subtitle">Vedic Astrology for Beginners</div>
+
+    <div class="warning" id="disclaimer">
+      <strong>Important Notice</strong>
+      This platform is strictly educational and created for absolute beginners to learn Vedic Astrology (Jyotish).<br><br>
+      No personal birth chart readings, predictions, remedies, or consultations are offered.<br>
+      Chart discussions are limited only to lesson examples, assignments, notes, and tests.<br><br>
+      Thank you for honoring this pure learning space.
+    </div>
+
+    <a href="#join" class="btn" id="btn1">Begin Your Journey</a>
+  </div>
+
+  <div class="join-section" id="join">
+    <h2 class="join-title" id="join-title">Join Our Community</h2>
+    <a href="https://t.me/joyofjyotish" target="_blank" class="btn" id="btn2">Join Telegram Channel</a>
+  </div>
+
+  <footer id="footer">© 2025 Joy of Jyotish • Ancient Wisdom for Modern Seekers</footer>
+
+  <script>
+    const grahas = [
+      ["सूर्य","#8B0000","#FFD700"],
+      ["चन्द्र","#FFFFFF","#000080"],
+      ["मंगल","#B22222","#FFFF99"],
+      ["बुध","#228B22","#FFF8DC"],
+      ["गुरु","#FFD700","#4B0082"],
+      ["शुक्र","#FFFAF0","#8B4499"],
+      ["शनि","#1C2526","#AFAFAF"],
+      ["राहु","#2F0047","#87CEEB"],
+      ["केतु","#5D3A1A","#D8BFD8"]
+    ];
+
+    let i = 0;
+    const title = document.getElementById("main-title");
+    const orig = title.innerText;
+
+    function change() {
+      const g = grahas[i];
+      document.body.style.backgroundColor = g[1];
+      document.body.style.color = g[2];
+
+      ["logo","main-title","subtitle","join-title","footer","disclaimer","btn1","btn2"].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) {
+          el.style.color = g[2];
+          el.style.borderColor = g[2];
+        }
+      });
+
+      title.innerHTML = g[0];
+      setTimeout(() => title.innerText = orig, 2300);
+
+      i = (i + 1) % grahas.length;
+    }
+
+    change();
+    setInterval(change, 7000);
+  </script>
+</body>
+</html>
