@@ -18,12 +18,32 @@
       line-height: 1.7;
     }
 
+    /* Header / Logo */
     .logo {
       padding: 2.5vh 2vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .site-logo {
+      height: 6vh;
+      max-height: 84px;
+      width: auto;
+      display: block;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .logo-text {
       font-size: 5.5vw;
       font-style: italic;
       font-weight: bold;
       background: rgba(0,0,0,0.18);
+      padding: 0.2em 0.5em;
+      border-radius: 6px;
+      line-height: 1;
     }
 
     .main {
@@ -258,7 +278,9 @@
 
     /* Caps maximum size so it never gets "too big" on large phones/laptops */
     @media (min-width: 600px) {
-      .logo        { font-size: 32px; padding: 16px; }
+      .logo-text   { font-size: 32px; }
+      .site-logo   { height: 48px; }
+      .main        { padding-top: 0; }
       .title       { font-size: 54px; }
       .subtitle    { font-size: 24px; }
       .warning     { font-size: 18px; padding: 24px; }
@@ -276,13 +298,14 @@
 
     /* Tiny old phones – still perfectly readable */
     @media (max-width: 360px) {
+      .logo-text   { font-size: 24px; }
+      .site-logo   { height: 36px; }
       .title       { font-size: 36px; }
       .subtitle    { font-size: 18px; }
       .warning     { font-size: 15px; padding: 16px; }
       .warning strong { font-size: 19px; }
       .btn         { font-size: 18px; padding: 12px 24px; }
       .cheatsheet-btn { font-size: 16px; padding: 10px 20px; }
-      .logo        { font-size: 24px; }
       .modal-body table { font-size: 12px; padding: 8px 4px; }
       .modal-body .img-title { font-size: 16px; }
       .modal-body .zodiac-img { max-width: 300px; }
@@ -291,7 +314,10 @@
 </head>
 <body>
 
-  <div class="logo" id="logo">Joy of Jyotish</div>
+  <div class="logo" id="logo">
+    <img src="https://raw.githubusercontent.com/joyofjyotish/joyofjyotish.github.io/6d7dfc364a9062a6143ed12d80ccd893694991f4/final%20logo.png" alt="Joy of Jyotish logo" class="site-logo">
+    <span class="logo-text">Joy of Jyotish</span>
+  </div>
 
   <div class="main">
     <h1 class="title" id="main-title">Joy of Jyotish</h1>
