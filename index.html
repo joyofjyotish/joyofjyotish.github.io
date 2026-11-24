@@ -768,7 +768,6 @@
       Please enable JavaScript to view them.
     </div>
   </noscript>
-
   <script>
     (function () {
       'use strict';
@@ -819,12 +818,97 @@
           themeInterval = null;
         }
         clearTimeout(titleTimer);
-        themes.forEach(function (xList.toggle('active', b === btn);
-          });
-          ['north', 'south', 'east'].forEach(function (id) {
-            const panel = document.getElementById('chart-' + id);
-            if (panel) panel.classList.toggle('active', id === target);
-          });
+        themes.forEach(function (x) { document.body.classList.remove(x.cls); });
+        title.textContent = origTitle;
+      }
+
+      if (!prefersReducedMotion.matches) {
+        startThemeCycle();
+      }
+      prefersReducedMotion.addEventListener('change', function (e) {
+        if (e.matches) stopThemeCycle();
+        else startThemeCycle();
+      });
+
+      /* ---------- Dialog open / close ---------- */
+      const dialog = document.getElementById('cheatsheetModal');
+      const openBtn = document.getElementById('openCheatsheetBtn');
+      const closeBtn = document.getElementById('closeModalBtn');
+      const closeFooterBtn = document.getElementById('closeFooterBtn');
+      const printBtn = document.getElementById('printBtn');
+      const modalTitle = document.getElementById('modalTitle');
+
+      function openModal() {
+        dialog.showModal();
+        modalTitle.focus();
+      }
+
+      function closeModal() {
+        dialog.close();
+      }
+
+      openBtn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      closeFooterBtn.addEventListener('click', closeModal);
+
+      /* Backdrop click fallback for Safari */
+      dialog.addEventListener('click', function (e) {
+        if (e.target === dialog) closeModal();
+      });
+
+      /* ---------- Tabs (roving tabindex) ---------- */
+      const tabButtons = Array.prototype.slice.call(
+        dialog.querySelectorAll('[role="tab"]')
+      );
+
+      function activateTab(btn) {
+        tabButtons.forEach(function (b) {
+          const isActive = b === btn;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-selected', String(isActive));
+          b.setAttribute('tabindex', isActive ? '0' : '-1');
+          const panel = document.getElementById(b.getAttribute('aria-controls'));
+          if (panel) {
+            panel.classList.toggle('active', isActive);
+            panel.hidden = !isActive;
+          }
+        });
+      }
+
+      tabButtons.forEach(function (btn, idx) {
+        btn.addEventListener('click', function () { activateTab(btn); });
+        btn.addEventListener('keydown', function (e) {
+          let target = null;
+          if (e.key === 'ArrowRight') target = tabButtons[(idx + 1) % tabButtons.length];
+          else if (e.key === 'ArrowLeft') target = tabButtons[(idx - 1 + tabButtons.length) % tabButtons.length];
+          else if (e.key === 'Home') target = tabButtons[0];
+          else if (e.key === 'End') target = tabButtons[tabButtons.length - 1];
+          if (target) {
+            e.preventDefault();
+            activateTab(target);
+            target.focus();
+          }
+        });
+      });
+
+      /* ---------- Chart style switcher (North / South / East) ---------- */
+      const chartStyleBtns = Array.prototype.slice.call(
+        dialog.querySelectorAll('.chart-style-btn')
+      );
+
+      function activateChart(style) {
+        chartStyleBtns.forEach(function (b) {
+          b.classList.toggle('active', b.getAttribute('data-chart') === style);
+        });
+        ['north', 'south', 'east'].forEach(function (id) {
+          const panel = document.getElementById('chart-' + id);
+          if (panel) panel.classList.toggle('active', id === style);
+        });
+      }
+
+      chartStyleBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          activateChart(btn.getAttribute('data-chart'));
         });
       });
 
@@ -834,5 +918,5 @@
       });
     })();
   </script>
-</body>
+ </body>
 </html>
